@@ -1,0 +1,24 @@
+{
+  "name": "weekend-8-project",
+  "version": "1.0.0",
+  "description": "Weekend project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joshkmanj/sql-to-do-list.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Joshkmanj/sql-to-do-list/issues"
+  },
+  "homepage": "https://github.com/Joshkmanj/sql-to-do-list#readme",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2",
+    "pg": "^8.7.3"
+  }
+}
