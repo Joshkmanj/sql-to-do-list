@@ -10,8 +10,13 @@ app.use(express.static('server/public'));
 // ROUTES
 app.use('/tasks', taskRouter);
 
+
+
+
+
+
+
 // Server starts listening here.
 app.listen(PORT,() => {
     console.log('Listening on port:', PORT);
-    
 });
