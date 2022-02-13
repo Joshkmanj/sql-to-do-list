@@ -23,7 +23,21 @@ router.get('/', (req,res) => {
 
 
 // ------------ < POST/INSERT Routes > -----------------------------------------
+router.post('/', (req,res) => {
+    console.log('POST request from client to /tasks:', req.body); //<--testing to ensure this stage is being reached
+    
+    // Assigning variables to make the flow of things more readable
+    let importedData = req.body.newTaskObject
+    let queryText = `INSERT INTO "tasks" ("task","priority") VALUES ($1,$2);`; //<--This variable sanitizes imported data and stores the sql command that'll be used in the database
+    pool.query(queryText, [importedData.task,importedData.priority])//<---This is the sanitized data sent to database.
 
+    .then(result => {   // If the database responds...
+    res.sendStatus(201); //<-- confirmation sent back to the client
+}).catch(error => {   // If the database doesn't respond, or has an error...
+    console.log('error posting tasks', error); //<-- logs the problem
+    res.sendStatus(500); //<--- Sends an error code back to client
+  });
+})
 // ------------ < // END POST/INSERT Routes > ----------------------------------
 
 

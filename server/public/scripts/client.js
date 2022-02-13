@@ -46,7 +46,7 @@ function addTasks(){
         task: $('#task-intake').val(),
         priority: $('#priority-selector').val()
     }
-    console.log('new task:', newTaskObject);
+    console.log('new task:', newTaskObject); // <-- test to ensure proper data is exported
     
 
     $.ajax({

@@ -14,8 +14,8 @@
             <h1>Task Master</h1>
             <div id="taskInputs">
                 <input type="text"  placeholder="Enter Your Tasks Here!" id="task-intake">
-                
-                <select id="priority-selector">
+                <label for="priority-selector">Priority Level:</label>
+                <select id="priority-selector" placeholder="priority">
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
                     <option value="high">High</option>
@@ -28,11 +28,12 @@
                 <thead><tr>
                     <th>To Do:</th>
                     <th>Priority</th>
+                    <th>Complete?</th>
                 </tr></thead>
                 <tbody id="taskOutput">
 
                 </tbody>
-            <table>
+            </table>
         </main>
 
       
