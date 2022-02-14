@@ -15,32 +15,44 @@ function renderToDom(array){
     console.log('Rendering an array to the DOM');
     $('#taskOutput').empty()
     for (let object of array) {
-        
-        // Filters for changing "status" from booleans to strings
-        if(object.status == false){
-            object.status = 'In progress';
-        } else if(object.status == true) {
-            object.status = 'Completed'}
-        
+
         // Filters for changing "priority" from Numbers to Strings
         if(object.priority == 1){
             object.priority = "Low"
         } else if(object.priority == 2){
             object.priority = "Medium"
         } else if(object.priority == 3){
-            object.priority = "High"
-        }
+            object.priority = "High"}
+        
+        // Filters for changing "status" from booleans to strings
+        if(object.status == false){
+            object.status = 'In progress';
 
-        $('#taskOutput').append(`
-        <tr data-id=${object.id}>
-            <td>${object.task}</td>
-            <td class="priority-row">${object.priority}</td>
-            <td class="status-row">${object.status}</td>
-            <td>
-                <button class="complete-button">Mark Complete</button>
-                <button class="delete-button" data-id=${object.id}>Delete</button>
-            </td>
-        </tr>`)
+            $('#taskOutput').append(`
+            <tr data-id=${object.id}>
+                <td>${object.task}</td>
+                <td class="priority-row">${object.priority}</td>
+                <td class="status-row">${object.status}</td>
+                <td>
+                    <button class="complete-button">Mark Complete</button>
+                    <button class="delete-button" data-id=${object.id}>Delete</button>
+                </td>
+            </tr>`)
+
+        } else if(object.status == true) {
+            object.status = 'Completed'
+
+            $('#taskOutput').append(`
+            <tr data-id=${object.id}>
+                <td class="done">${object.task}</td>
+                <td class="priority-row done">${object.priority}</td>
+                <td class="status-row done">${object.status}</td>
+                <td>
+                    <button class="complete-button">Completed</button>
+                    <button class="delete-button" data-id=${object.id}>Delete</button>
+                </td>
+            </tr>`)
+        }        
     }
 }
 // ------------ < // END Display handlers > ------------------------------------
