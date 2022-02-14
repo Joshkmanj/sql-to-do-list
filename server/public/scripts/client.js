@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 $(document).ready(readyNow);
 
 function readyNow() {
@@ -16,8 +18,8 @@ function renderToDom(array){
         $('#taskOutput').append(`
         <tr data-id=${object.id}>
             <td>${object.task}</td>
-            <td>${object.priority}</td>
-            <td>${object.status}</td>
+            <td class="priority-row">${object.priority}</td>
+            <td class="status-row">${object.status}</td>
             <td><button id="delete-button" data-id=${object.id}>Delete</button></td>
         </tr>`)
     }
@@ -68,7 +70,25 @@ function addTasks(){
 
 
 // ------------ < PUT/UPDATE Routes > ------------------------------------------
+function checkOffTask(){
+    let checkId = $(this).closest('tr').data().id
+    let status = $(this).sibling('.status-row').text()
+    console.log('Update completion status of this id:', checkId);//<-- Test to ensure this stage is being reached
 
+    $.ajax({
+        method: "PUT",
+        url: `/tasks/${checkId}`,
+        data: {
+            id: checkId,
+            status: status
+        }
+    }).then(function(response){
+        console.log('checkOffTask: Response from server:', response); //<-- logs response contents in console for test purposes
+        getTasks() //<--- New GET request to refresh the DOM
+    }).catch(function(error){
+        console.error('checkOffTask: No response from server:', error);//<-- logs the error
+    })
+}
 // ------------ < // END PUT/UPDATE Routes > -----------------------------------
 
 
