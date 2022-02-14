@@ -47,7 +47,18 @@ router.post('/', (req,res) => {
 
 
 // ------------ < DELETE Routes > ----------------------------------------------
-
+router.delete('/:id', (req,res) => {
+  let deleteId = req.params.id;
+  let queryText = `DELETE FROM "tasks" WHERE "id" = $1;`;
+  pool.query(queryText, [deleteId])
+  .then(result => {
+    console.log('Database deleted successfully:', result);
+    res.sendStatus(200)
+  }).catch((error)=>{
+    console.log('Delete failed!', queryText, error);
+    res.sendStatus(500)
+  })
+})
 // ------------ < // END DELETE Routes > ---------------------------------------
 
 

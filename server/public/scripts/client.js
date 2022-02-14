@@ -82,7 +82,7 @@ function removeTask() {
         url: `/tasks/${deleteId}`
     }).then(function(response){ // If the server responds...
         console.log('removeTask: Response from server:', response); //<-- logs response contents in console for test purposes
-        renderToDom(response) //<--- Sends the response to be appended to DOM
+        getTasks() //<--- Triggers a new GET request to refresh the DOM
     }).catch(function(error) { // In case of no response/error...
       console.error('removeTask: No response from server:', error);//<-- logs the error
     })
