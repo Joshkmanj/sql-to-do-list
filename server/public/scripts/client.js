@@ -5,6 +5,7 @@ function readyNow() {
     // On page load/reload, this will retrieve data from the database
     getTasks();
     $('#input-button').on('click', addTasks)
+    $('#taskOutput').on('click', '#delete-button', removeTask)
 }
 
 // ------------ < Display handlers > -------------------------------------------
@@ -17,6 +18,7 @@ function renderToDom(array){
             <td>${object.task}</td>
             <td>${object.priority}</td>
             <td>${object.status}</td>
+            <td><button id="delete-button" data-id=${object.id}>Delete</button></td>
         </tr>`)
     }
 }
@@ -71,5 +73,18 @@ function addTasks(){
 
 
 // ------------ < DELETE Routes > ----------------------------------------------
-
+function removeTask() {
+    let deleteId = $(this).data().id
+    console.log('Removing page data, id:', deleteId);//<-- Test to ensure this stage is being reached
+    
+    $.ajax({
+        method: "DELETE",
+        url: `/tasks/${deleteId}`
+    }).then(function(response){ // If the server responds...
+        console.log('removeTask: Response from server:', response); //<-- logs response contents in console for test purposes
+        getTasks() //<--- Triggers a new GET request to refresh the DOM
+    }).catch(function(error) { // In case of no response/error...
+      console.error('removeTask: No response from server:', error);//<-- logs the error
+    })
+}
 // ------------ < // END DELETE Routes > ---------------------------------------
