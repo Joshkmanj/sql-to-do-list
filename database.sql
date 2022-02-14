@@ -1,9 +1,14 @@
 CREATE TABLE tasks (
     "id" serial PRIMARY KEY,
     "task" VARCHAR(240) NOT NULL,
-    "priority" VARCHAR(6),
-    "completionStatus" BOOLEAN DEFAULT FALSE
+    "priority" INTEGER,
+    "status" BOOLEAN DEFAULT FALSE
 );
+
+INSERT INTO "tasks" ("task","priority","status")
+VALUES ('walk the dog','3','false'),
+('Get a second dog','2','false'),
+('Get third dog to watch over the first two','1','false');
 
 -- Priority options will be 'low', 'medium', 'high'         ;
 -- If it feels necessary, I'll update the table to include a new row for a "due date" information to be included.

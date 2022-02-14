@@ -17,7 +17,7 @@ body{
     height: 100%;
     margin: 0px;
     background-attachment: fixed;
-    /* background-color: black; */
+    background-color: black;
     text-align: center;
     align-content: center;
 }
