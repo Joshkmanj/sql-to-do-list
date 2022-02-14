@@ -34,8 +34,8 @@ function renderToDom(array){
                 <td class="priority-row">${object.priority}</td>
                 <td class="status-row">${object.status}</td>
                 <td>
-                    <button class="complete-button">Mark Complete</button>
-                    <button class="delete-button" data-id=${object.id}>Delete</button>
+                    <button class="complete-button green">Mark Complete</button>
+                    <button class="delete-button red" data-id=${object.id}>Delete</button>
                 </td>
             </tr>`)
 
@@ -49,7 +49,7 @@ function renderToDom(array){
                 <td class="status-row done">${object.status}</td>
                 <td>
                     <button class="complete-button">Completed</button>
-                    <button class="delete-button" data-id=${object.id}>Delete</button>
+                    <button class="delete-button red" data-id=${object.id}>Delete</button>
                 </td>
             </tr>`)
         }        

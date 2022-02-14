@@ -36,6 +36,7 @@ table{
     border-spacing: 5px 10px;
     overflow-wrap: break-word;
     width: 80%;
+    display: inline-table;
 }
 td,th{
     /* background-color: rgb(111, 128, 144, .5); */
@@ -65,5 +66,11 @@ background-color: #438f9d;
 }
 .done{
     text-decoration: line-through;
-    color: rgb(66, 112, 112);
+    color: #4270706b;
+}
+.green{
+    background-color: #69af69;
+}
+.red{
+    background-color: #d04747f7;
 }
