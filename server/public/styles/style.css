@@ -46,6 +46,7 @@ main{
 input, select, button{
     padding: 5px;
     border-radius: 10px;
+    display:inline-block;
 }
 #taskInputs{
     /* background-color: #c6ae87;

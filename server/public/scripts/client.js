@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 $(document).ready(readyNow);
 
 function readyNow() {
@@ -7,7 +5,8 @@ function readyNow() {
     // On page load/reload, this will retrieve data from the database
     getTasks();
     $('#input-button').on('click', addTasks)
-    $('#taskOutput').on('click', '#delete-button', removeTask)
+    $('#taskOutput').on('click', '.delete-button', removeTask)
+    $('#taskOutput').on('click', '.complete-button', checkOffTask)
 }
 
 // ------------ < Display handlers > -------------------------------------------
@@ -19,8 +18,11 @@ function renderToDom(array){
         <tr data-id=${object.id}>
             <td>${object.task}</td>
             <td class="priority-row">${object.priority}</td>
-            <td class="status-row">${object.status}</td>
-            <td><button id="delete-button" data-id=${object.id}>Delete</button></td>
+            <td class="status-row">${object.status} </td>
+            <td>
+                <button class="complete-button">Mark Complete</button>
+                <button class="delete-button" data-id=${object.id}>Delete</button>
+            </td>
         </tr>`)
     }
 }
@@ -71,15 +73,14 @@ function addTasks(){
 
 // ------------ < PUT/UPDATE Routes > ------------------------------------------
 function checkOffTask(){
-    let checkId = $(this).closest('tr').data().id
-    let status = $(this).sibling('.status-row').text()
-    console.log('Update completion status of this id:', checkId);//<-- Test to ensure this stage is being reached
+    let checkId = $(this).parents('tr').data().id
+    let status = $(this).parent().siblings('.status-row').text()
+    console.log(`checkOffTask: Selected: ${checkId} - ${status}`);
 
     $.ajax({
         method: "PUT",
         url: `/tasks/${checkId}`,
         data: {
-            id: checkId,
             status: status
         }
     }).then(function(response){
