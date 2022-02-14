@@ -1,3 +1,5 @@
+--  --  --  --  --  These commands below are for setting up the database table in Postico -- -- -- -- -- -- -- --
+-- Run this one first -- --
 CREATE TABLE tasks (
     "id" serial PRIMARY KEY,
     "task" VARCHAR(240) NOT NULL,
@@ -5,15 +7,20 @@ CREATE TABLE tasks (
     "status" BOOLEAN DEFAULT FALSE
 );
 
+-- Run this command to add example/test data-- --
 INSERT INTO "tasks" ("task","priority","status")
 VALUES ('walk the dog','3','false'),
 ('Get a second dog','2','false'),
 ('Get third dog to watch over the first two','1','false');
 
--- Priority options will be 'low', 'medium', 'high'         ;
--- If it feels necessary, I'll update the table to include a new row for a "due date" information to be included.
+-- -- -- -- -- -- -- End of Set Up -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+
+
+-- The following commands are just examples of the sql commands used on the server
+
+-- For future renditions, I may update the table to include a new row for a "due date" information to be included.
 ---------------->This would be the command---->  ALTER TABLE "tasks" ADD "date_due" DATE; <-------------------
--- Status will be True or False, maybe updated in the future to include a "in-progress" option
+-- Status will be stored as True or False, but will display as either "In progress" or "Completed"
 
 -------------- Command for GET/SELECT Routes --------------
 SELECT * FROM "tasks" ORDER BY "priority";
