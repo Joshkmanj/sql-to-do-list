@@ -4,25 +4,73 @@ function readyNow() {
     console.log('jquery is ready');
     // On page load/reload, this will retrieve data from the database
     getTasks();
-    $('#input-button').on('click', addTasks)
-    $('#taskOutput').on('click', '#delete-button', removeTask)
+    $('#input-button').on('click', inputsIntake)
+    $('#taskOutput').on('click', '.delete-button', removeTask)
+    $('#taskOutput').on('click', '.complete-button', checkOffTask)
 }
+
 
 // ------------ < Display handlers > -------------------------------------------
 function renderToDom(array){
     console.log('Rendering an array to the DOM');
     $('#taskOutput').empty()
     for (let object of array) {
+        
+        // Filters for changing "status" from booleans to strings
+        if(object.status == false){
+            object.status = 'In progress';
+        } else if(object.status == true) {
+            object.status = 'Completed'}
+        
+        // Filters for changing "priority" from Numbers to Strings
+        if(object.priority == 1){
+            object.priority = "Low"
+        } else if(object.priority == 2){
+            object.priority = "Medium"
+        } else if(object.priority == 3){
+            object.priority = "High"
+        }
+
         $('#taskOutput').append(`
         <tr data-id=${object.id}>
             <td>${object.task}</td>
-            <td>${object.priority}</td>
-            <td>${object.status}</td>
-            <td><button id="delete-button" data-id=${object.id}>Delete</button></td>
+            <td class="priority-row">${object.priority}</td>
+            <td class="status-row">${object.status}</td>
+            <td>
+                <button class="complete-button">Mark Complete</button>
+                <button class="delete-button" data-id=${object.id}>Delete</button>
+            </td>
         </tr>`)
     }
 }
 // ------------ < // END Display handlers > ------------------------------------
+
+// ------------ < Input/Output logic handling > --------------------------------
+function inputsIntake() {// <-- this grabs the data from the input field and packs it in an object
+    
+    let newTaskObject = { 
+        task: $('#task-intake').val(),
+        priority: $('#priority-selector').val()
+    }
+    if (newTaskObject.task === ''){
+        alert('Please write a task!')
+        return;
+    }
+    if (newTaskObject.priority == undefined) {
+        alert('Please select a priority level')
+        return;
+    }
+    console.log('new task:', newTaskObject); // <-- test to ensure proper data is packed up
+    
+    // These reset the inputs
+    $('#task-intake').val('')
+    $('#priority-selector').prop('selectedIndex',0);
+
+    // This triggers the POST request to the server.
+    addTasks(newTaskObject)
+}
+// ------------ < // END Input/Output logic handling > -------------------------
+
 
 // ------------ < GET/SELECT Routes > ------------------------------------------
 function getTasks() {
@@ -41,15 +89,8 @@ function getTasks() {
 
 
 // ------------ < POST/INSERT Routes > -----------------------------------------
-function addTasks(){
+function addTasks(newTaskObject){
     console.log('Adding new task!'); //<-- Test to ensure this stage is being reached
-
-    let newTaskObject = { // <-- this grabs the data from the input field and packs it in an object
-        task: $('#task-intake').val(),
-        priority: $('#priority-selector').val()
-    }
-    console.log('new task:', newTaskObject); // <-- test to ensure proper data is exported
-    
 
     $.ajax({
         method: "POST",
@@ -68,7 +109,24 @@ function addTasks(){
 
 
 // ------------ < PUT/UPDATE Routes > ------------------------------------------
+function checkOffTask(){
+    let checkId = $(this).parents('tr').data().id
+    let status = $(this).parent().siblings('.status-row').text()
+    console.log(`checkOffTask: Selected: ${checkId} - ${status}`);
 
+    $.ajax({
+        method: "PUT",
+        url: `/tasks/${checkId}`,
+        data: {
+            status: status
+        }
+    }).then(function(response){
+        console.log('checkOffTask: Response from server:', response); //<-- logs response contents in console for test purposes
+        getTasks() //<--- New GET request to refresh the DOM
+    }).catch(function(error){
+        console.error('checkOffTask: No response from server:', error);//<-- logs the error
+    })
+}
 // ------------ < // END PUT/UPDATE Routes > -----------------------------------
 
 

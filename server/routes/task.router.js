@@ -42,8 +42,35 @@ router.post('/', (req,res) => {
 
 
 // ------------ < PUT/UPDATE Routes > ------------------------------------------
+router.put('/:id', (req,res) => {
+  let checkId = req.params.id;
+  let priorStatus = req.body.status;
+  let newStatus;
+  console.log(`priorStatus:${priorStatus}.`);
+  
+  // This will change the status value from a string to a boolean for storage.
+  if (priorStatus==='In progress') {
+    newStatus = true;
+  }else if(priorStatus==='Completed'){
+    newStatus = false;
+  } else{
+    console.log('invalid update request');
+    return;
+  }
 
-// ------------ < // END PUT/UPDATE Routes > -----------------------------------
+  // SQL Commands for updating database values
+  let queryText = `UPDATE "tasks"
+  SET "status" = $1
+  WHERE "id" = $2;`;
+  pool.query(queryText, [newStatus,checkId])  
+  
+  .then(result => {
+    res.sendStatus(200)// <-- If database responds, this sends confirmation to client.
+  }).catch((error)=>{
+    console.log('Update failed!', req.body, error);
+    res.sendStatus(500)// <-- In case of errors, this sends info to client.
+  })
+})// ------------ < // END PUT/UPDATE Routes > -----------------------------------
 
 
 // ------------ < DELETE Routes > ----------------------------------------------

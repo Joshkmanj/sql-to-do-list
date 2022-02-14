@@ -17,7 +17,7 @@ body{
     height: 100%;
     margin: 0px;
     background-attachment: fixed;
-    /* background-color: black; */
+    background-color: black;
     text-align: center;
     align-content: center;
 }
@@ -46,6 +46,7 @@ main{
 input, select, button{
     padding: 5px;
     border-radius: 10px;
+    display:inline-block;
 }
 #taskInputs{
     /* background-color: #c6ae87;
