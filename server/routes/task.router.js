@@ -8,7 +8,7 @@ const pool = require('../modules/pool')
 router.get('/', (req,res) => {
     console.log('GET request from client to /tasks'); //<--testing to ensure this stage is being reached
 
-    let queryText = 'SELECT * FROM "tasks" ORDER BY "priority";'; //<--This variable stores the sql command that'll be used in the database
+    let queryText = 'SELECT * FROM "tasks" ORDER BY "priority","id";'; //<--This variable stores the sql command that'll be used in the database
     pool.query(queryText)//<---This is the out-going message to the database.
     
     .then(result => {   // If the database responds...
