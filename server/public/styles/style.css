@@ -33,6 +33,7 @@ table{
     border-radius: 40px;
     box-shadow: 3px 3px 9px black;
     row-gap: 5px;
+    column-gap: 15px;
     border-spacing: 5px 10px;
 }
 td,th{
